@@ -28,56 +28,24 @@ const btnRight = document.querySelector(".slider__btn--right");
 const dotContainer = document.querySelector(".dots");
 
 /////////////////////////////////////////////////////////////
-// COOKIE
+// TOGGLE NAVBAR
 /////////////////////////////////////////////////////////////
 
-cookieCloseBtn.addEventListener("click", function () {
-  cookieBody.classList.add("hidden");
-  cookieBody.style.bottom = "-12rem";
+toggleBtn.addEventListener("click", function () {
+  if (navLinks.classList.contains("nav__open")) {
+    navLinks.classList.remove("nav__open");
+    document.querySelector("html").style.overflow = "visible";
+  } else {
+    navLinks.classList.add("nav__open");
+    document.querySelector("html").style.overflow = "hidden";
+  }
 });
 
-/////////////////////////////////////////////////////////////
-// STICKY NAVIGATION
-/////////////////////////////////////////////////////////////
+navLinks.addEventListener("click", function () {
+  navLinks.classList.contains("nav__open") &&
+    navLinks.classList.remove("nav__open");
 
-const navHeight = nav.getBoundingClientRect().height;
-
-function sticky(entries) {
-  const entry = entries[0];
-
-  if (!entry.isIntersecting) nav.classList.add("sticky");
-  else nav.classList.remove("sticky");
-}
-
-const headerObserver = new IntersectionObserver(sticky, {
-  root: null,
-  threshold: 0,
-  rootMargin: `-${navHeight}px`,
-});
-
-headerObserver.observe(header);
-
-/////////////////////////////////////////////////////////////
-// REVEAL SECTIONS
-/////////////////////////////////////////////////////////////
-
-function revealSection(entries, observer) {
-  const [entry] = entries;
-
-  if (!entry.isIntersecting) return;
-  entry.target.classList.remove("section--hidden");
-
-  observer.unobserve(entry.target);
-}
-
-const sectionObserver = new IntersectionObserver(revealSection, {
-  root: null,
-  threshold: 0.2,
-});
-
-allSections.forEach((section) => {
-  sectionObserver.observe(section);
-  section.classList.add("section--hidden");
+  document.querySelector("html").style.overflow = "visible";
 });
 
 /////////////////////////////////////////////////////////////
@@ -127,31 +95,93 @@ btnScrollTo.addEventListener("click", function () {
 });
 
 /////////////////////////////////////////////////////////////
-// TOGGLE NAVBAR
+// STICKY NAVIGATION
 /////////////////////////////////////////////////////////////
 
-toggleBtn.addEventListener("click", function () {
-  if (navLinks.classList.contains("nav__open")) {
-    navLinks.classList.remove("nav__open");
-    document.querySelector("html").style.overflow = "visible";
-  } else {
-    navLinks.classList.add("nav__open");
-    document.querySelector("html").style.overflow = "hidden";
-  }
+const navHeight = nav.getBoundingClientRect().height;
+
+function sticky(entries) {
+  const entry = entries[0];
+
+  if (!entry.isIntersecting) nav.classList.add("sticky");
+  else nav.classList.remove("sticky");
+}
+
+const headerObserver = new IntersectionObserver(sticky, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
 });
 
-navLinks.addEventListener("click", function () {
-  navLinks.classList.contains("nav__open") &&
-    navLinks.classList.remove("nav__open");
+headerObserver.observe(header);
 
-  document.querySelector("html").style.overflow = "visible";
+/////////////////////////////////////////////////////////////
+// TABBED COMPONENTS
+/////////////////////////////////////////////////////////////
+
+tabsContainer.addEventListener("click", function (e) {
+  const btn = e.target.closest(".operations__tab");
+
+  // GUARD CLAUSE
+
+  if (!btn) return;
+
+  // REMOVING ACTIVE CLASSES
+
+  tabs.forEach((tab) => tab.classList.remove("operations__tab--active"));
+
+  tabsContent.forEach((content) =>
+    content.classList.remove("operations__content--active")
+  );
+
+  // ACTIVATE TAB
+
+  btn.classList.add("operations__tab--active");
+
+  // ACTIVATE CONTENT AREA
+
+  document
+    .querySelector(`.operations__content--${btn.dataset.tab}`)
+    .classList.add("operations__content--active");
+});
+
+/////////////////////////////////////////////////////////////
+// REVEAL SECTIONS
+/////////////////////////////////////////////////////////////
+
+function revealSection(entries, observer) {
+  const [entry] = entries;
+
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove("section--hidden");
+
+  observer.unobserve(entry.target);
+}
+
+const sectionObserver = new IntersectionObserver(revealSection, {
+  root: null,
+  threshold: 0.2,
+});
+
+allSections.forEach((section) => {
+  sectionObserver.observe(section);
+  section.classList.add("section--hidden");
+});
+
+/////////////////////////////////////////////////////////////
+// COOKIE
+/////////////////////////////////////////////////////////////
+
+cookieCloseBtn.addEventListener("click", function () {
+  cookieBody.classList.add("hidden");
+  cookieBody.style.bottom = "-12rem";
 });
 
 /////////////////////////////////////////////////////////////
 // IMPLEMENTING LAZY LOADING
 /////////////////////////////////////////////////////////////
 
-const loadImg = function (entries, observer) {
+const loadImg = function (entries) {
   const entry = entries[0];
 
   if (!entry.isIntersecting) return;
@@ -249,34 +279,4 @@ btnRight.addEventListener("click", nextSlide);
 document.addEventListener("keydown", function (e) {
   e.key === "ArrowLeft" && previousSlide();
   e.key === "ArrowRight" && nextSlide();
-});
-
-/////////////////////////////////////////////////////////////
-// TABBED COMPONENTS
-/////////////////////////////////////////////////////////////
-
-tabsContainer.addEventListener("click", function (e) {
-  const btn = e.target.closest(".operations__tab");
-
-  // GUARD CLAUSE
-
-  if (!btn) return;
-
-  // REMOVING ACTIVE CLASSES
-
-  tabs.forEach((tab) => tab.classList.remove("operations__tab--active"));
-
-  tabsContent.forEach((content) =>
-    content.classList.remove("operations__content--active")
-  );
-
-  // ACTIVATE TAB
-
-  btn.classList.add("operations__tab--active");
-
-  // ACTIVATE CONTENT AREA
-
-  document
-    .querySelector(`.operations__content--${btn.dataset.tab}`)
-    .classList.add("operations__content--active");
 });
