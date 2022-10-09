@@ -32,80 +32,53 @@ const dotContainer = document.querySelector(".dots");
 /////////////////////////////////////////////////////////////
 
 cookieCloseBtn.addEventListener("click", function () {
-  cookieBody.classList.add("hidden"); // adding 'hidden' class to the cookie body
-  cookieBody.style.bottom = "-12rem"; // it'll go 12rem downside
+  cookieBody.classList.add("hidden");
+  cookieBody.style.bottom = "-12rem";
 });
 
 /////////////////////////////////////////////////////////////
-// STICKY NAVBAR
+// STICKY NAVIGATION
 /////////////////////////////////////////////////////////////
 
-/* The Element.getBoundingClientRect() method returns a DOMRect object providing information about the size of an element and its position relative to the viewport.
-
-The returned value is a DOMRect object which is the smallest rectangle which contains the entire element, including its padding and border-width. The left, top, right, bottom, x, y, width, and height properties describe the position and size of the overall rectangle in pixels. Properties other than width and height are relative to the top-left of the viewport.
-*/
-
-// browser API - insersectionObserver(callBack func, object)
-
-/* Intersection Observer API -- The Intersection Observer API provides a way to asynchronously observe changes in the intersection of a target element with an ancestor element or with a top-level document's viewport.
-
-Historically, detecting visibility of an element, or the relative visibility of two elements in relation to each other, has been a difficult task for which solutions have been unreliable and prone to causing the browser and the sites the user is accessing to become sluggish. As the web has matured, the need for this kind of information has grown. Intersection information is needed for many reasons, such as:
-
-1. Lazy-loading of images or other content as a page is scrolled.
-2. Implementing "infinite scrolling" web sites, where more and more content is loaded and rendered as you scroll, so that the user doesn't have to flip through pages.
-3. Reporting of visibility of advertisements in order to calculate ad revenues.
-4. Deciding whether or not to perform tasks or animation processes based on whether or not the user will see the result.
-
-The Intersection Observer API allows you to configure a callback that is called when either of these circumstances occur:
-
-1. A target element intersects either the device's viewport or a specified element. That specified element is called the root element or root for the purposes of the Intersection Observer API.
-2. The first time the observer is initially asked to watch a target element.
-*/
-
-// nav's height calculation dynamically
-
-const navHeight = nav.getBoundingClientRect().height; // getting nav height dynamically
+const navHeight = nav.getBoundingClientRect().height;
 
 function sticky(entries) {
-  const entry = entries[0]; // it'll take only first index of first event(IntersectionObserverEntry) which is made after scrolling up or down
+  const entry = entries[0];
 
   if (!entry.isIntersecting) nav.classList.add("sticky");
-  // add sticky class to the navbar when intersecting line is out of viewport
-  else nav.classList.remove("sticky"); // otherwise remove sticky class from navbar
+  else nav.classList.remove("sticky");
 }
 
 const headerObserver = new IntersectionObserver(sticky, {
-  root: null, // target viewport
-  threshold: 0, // ratio -- Starting value of targetted element shows in viewport is known as thresold
-  rootMargin: `-${navHeight}px`, // changing intersecting point(rootMargin) at -90px(upward);
-  // Navbar becomes sticky before ending the header section & before the beggining of a new section
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`,
 });
 
-headerObserver.observe(header); // observing header class using headerObserver
+headerObserver.observe(header);
 
 /////////////////////////////////////////////////////////////
-// REVEAL SECTION
+// REVEAL SECTIONS
 /////////////////////////////////////////////////////////////
 
 function revealSection(entries, observer) {
-  // const entry = entries.at(0);
+  const [entry] = entries;
 
-  const [entry] = entries; // destructuring -- select zero index value, entries means creating events after scrolling
-  if (!entry.isIntersecting) return; // return nothing
-  entry.target.classList.remove("section--hidden"); // removes hidden class from every section when intersection became true, here entry.target means single section
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove("section--hidden");
 
-  observer.unobserve(entry.target); // entry.target, targets every single element individually...target used because it has multiple elements
+  observer.unobserve(entry.target);
 }
 
 const sectionObserver = new IntersectionObserver(revealSection, {
   root: null,
-  threshold: 0.2, // after entering 20% of a section, it
+  threshold: 0.2,
   rootMargin: "200px",
-}); // observer itself
+});
 
 allSections.forEach((section) => {
-  sectionObserver.observe(section); // observing section
-  section.classList.add("section--hidden"); // adding hidden class to every single section
+  sectionObserver.observe(section);
+  section.classList.add("section--hidden");
 });
 
 /////////////////////////////////////////////////////////////
@@ -113,18 +86,18 @@ allSections.forEach((section) => {
 /////////////////////////////////////////////////////////////
 
 function openModal(e) {
-  e.preventDefault(); // preventing default behavior of link which is "link targets homepage"
+  e.preventDefault();
 
-  modal.classList.remove("hidden"); // remove hidden class from html
+  modal.classList.remove("hidden");
   overlay.classList.remove("hidden");
 }
 
 function closeModal() {
-  modal.classList.add("hidden"); // adding hidden class to the html
+  modal.classList.add("hidden");
   overlay.classList.add("hidden");
 }
 
-btnsOpenModal.forEach((btn) => btn.addEventListener("click", openModal)); // adding event listener to every btn-show-modal class individually
+btnsOpenModal.forEach((btn) => btn.addEventListener("click", openModal));
 
 btnCloseModal.addEventListener("click", closeModal);
 
@@ -134,38 +107,22 @@ document.addEventListener("keydown", function (e) {
   if (e.key === "Escape" && !modal.classList.contains("hidden")) {
     closeModal();
   }
-}); // after keydown to 'Escape' button if the key : "Escape" && modal doesn't contain hidden class then close the modal
+});
 
 /////////////////////////////////////////////////////////////
 // SMOOTH SCROLLING
 /////////////////////////////////////////////////////////////
 
-// The contains() method of the Node interface returns a boolean value indicating whether a node is a descendant of a given node, that is the node itself, one of its direct children (childNodes), one of the children's direct children, and so on.
-
-/*The Element interface's scrollIntoView() method scrolls the element's ancestor containers such that the element on which scrollIntoView() is called is visible to the user.
-
-scrollIntoView(scrollIntoViewOptions)
-An Object with the following properties:
-
-behavior :
-Defines the transition animation. One of auto or smooth. Defaults to auto.
-
-block :
-Defines vertical alignment. One of start, center, end, or nearest. Defaults to start.
-
-inline :
-Defines horizontal alignment. One of start, center, end, or nearest. Defaults to nearest.
-*/
-
 navLinks.addEventListener("click", function (e) {
   e.preventDefault();
+
   if (e.target.classList.contains("nav__link")) {
-    const attr = e.target.getAttribute("href"); // selecting location inside href attribute
-    document.querySelector(attr).scrollIntoView({ behavior: "smooth" }); // scrollIntoView means we will go into defined location after scrolling
+    const attr = e.target.getAttribute("href");
+
+    document.querySelector(attr).scrollIntoView({ behavior: "smooth" });
   }
 });
 
-// Button Learn More smooth scrolling
 btnScrollTo.addEventListener("click", function () {
   section1.scrollIntoView({ behavior: "smooth" });
 });
@@ -187,11 +144,12 @@ toggleBtn.addEventListener("click", function () {
 navLinks.addEventListener("click", function () {
   navLinks.classList.contains("nav__open") &&
     navLinks.classList.remove("nav__open");
+
   document.querySelector("html").style.overflow = "visible";
 });
 
 /////////////////////////////////////////////////////////////
-// Implementing Lazy Loading -- we'll never do it
+// Implementing Lazy Loading
 /////////////////////////////////////////////////////////////
 
 const loadImg = function (entries, observer) {
@@ -201,7 +159,7 @@ const loadImg = function (entries, observer) {
   entry.target.src = entry.target.dataset.src;
 
   entry.target.addEventListener("load", function () {
-    entry.target.classList.remove("lazy-img"); // blur gone show main img
+    entry.target.classList.remove("lazy-img");
   });
 };
 
@@ -218,9 +176,9 @@ imgTargets.forEach((img) => imgObserver.observe(img));
 /////////////////////////////////////////////////////////////
 
 let currentSlide = 0;
-const maxSlide = slides.length - 1; // last element of slides array
+const maxSlide = slides.length - 1;
 
-// create dots
+// CREATING DOTS
 
 function creatingDots() {
   slides.forEach((_, i) => {
@@ -231,7 +189,7 @@ function creatingDots() {
 
 creatingDots();
 
-// Activate dots
+// ACTIVATE DOTS
 
 function activateDots(slide) {
   document
@@ -245,42 +203,49 @@ function activateDots(slide) {
 
 activateDots(0);
 
-function changeSlide(cs) {
+// UPDATE SLIDE
+
+function updateSlide(cs) {
   slides.forEach(
     (sl, i) => (sl.style.transform = `translateX(${100 * (i - cs)}%)`)
   );
 }
 
-changeSlide(0);
+updateSlide(0);
+
+// PREVIOUS SLIDE
 
 function previousSlide() {
   if (currentSlide === 0) currentSlide = maxSlide;
   else currentSlide--;
-  changeSlide(currentSlide);
+  updateSlide(currentSlide);
   activateDots(currentSlide);
 }
+
+// NEXT SLIDE
 
 function nextSlide() {
   if (currentSlide === maxSlide) currentSlide = 0;
   else currentSlide++;
-  changeSlide(currentSlide);
+  updateSlide(currentSlide);
   activateDots(currentSlide);
 }
 
-// dots handles
+// HANDLING DOTS
 
 dotContainer.addEventListener("click", function (e) {
   if (e.target.classList.contains("dots__dot")) {
     activateDots(e.target.dataset.slide);
-    changeSlide(e.target.changeSlide.slide);
+    updateSlide(e.target.changeSlide.slide);
   }
 });
 
-// handling buttons
+// HANDLING BUTTONS
+
 btnLeft.addEventListener("click", previousSlide);
 btnRight.addEventListener("click", nextSlide);
 
-//Keyboard handler
+// HANDLING KEYBOARD
 
 document.addEventListener("keydown", function (e) {
   e.key === "ArrowLeft" && previousSlide();
@@ -288,13 +253,17 @@ document.addEventListener("keydown", function (e) {
 });
 
 /////////////////////////////////////////////////////////////
-// Tabbed Components
+// TABBED COMPONENTS
 /////////////////////////////////////////////////////////////
 
 tabsContainer.addEventListener("click", function (e) {
   const btn = e.target.closest(".operations__tab");
 
+  // GUARD CLAUSE
+
   if (!btn) return;
+
+  // REMOVING ACTIVE CASSES
 
   tabs.forEach((tab) => tab.classList.remove("operations__tab--active"));
 
@@ -302,7 +271,12 @@ tabsContainer.addEventListener("click", function (e) {
     content.classList.remove("operations__content--active")
   );
 
+  // ACTIVATE TAB
+
   btn.classList.add("operations__tab--active");
+
+  // ACTIVATE CONTENT AREA
+
   document
     .querySelector(`.operations__content--${btn.dataset.tab}`)
     .classList.add("operations__content--active");
