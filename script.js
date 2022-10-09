@@ -148,7 +148,7 @@ navLinks.addEventListener("click", function () {
 });
 
 /////////////////////////////////////////////////////////////
-// Implementing Lazy Loading
+// IMPLEMENTING LAZY LOADING
 /////////////////////////////////////////////////////////////
 
 const loadImg = function (entries, observer) {
@@ -171,7 +171,7 @@ const imgObserver = new IntersectionObserver(loadImg, {
 imgTargets.forEach((img) => imgObserver.observe(img));
 
 /////////////////////////////////////////////////////////////
-// SLIDER
+// IMPLEMENTING SLIDER
 /////////////////////////////////////////////////////////////
 
 let currentSlide = 0;
