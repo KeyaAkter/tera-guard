@@ -59,9 +59,11 @@ html {
 body {
   font-family: "Poppins", sans-serif;
   font-weight: 300;
-  color: #444;
+  /* color: #444; */
+  color: rgb(209, 213, 219);
   line-height: 1.9;
-  background-color: #f3f3f3;
+  /* background-color: #f3f3f3; */
+  background-color: rgb(17, 24, 39);
   overflow-x: hidden;
 }
 
@@ -168,11 +170,26 @@ img {
   }
 }
 
+.nav__title {
+  display: flex;
+  column-gap: 2rem;
+}
+
+.nav__title p {
+  color: #f3f3f3;
+  font-size: 2.5rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
 .nav.sticky {
   position: fixed;
-  background-color: rgba(255, 255, 255, 0.75);
+  /* background-color: rgba(255, 255, 255, 0.75); */
+  background-color: rgba(31, 41, 55, 0.75);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+  box-shadow: 9px 12.5px 62.6px rgba(0, 0, 0, 0.05),
+    72px 100px 500px rgba(0, 0, 0, 0.075);
 }
 
 .nav__logo {
@@ -202,6 +219,11 @@ img {
   text-decoration: none;
   display: block;
   transition: all 0.3s;
+}
+
+.nav__link:hover,
+.nav__link:active {
+  color: var(--color-primary-darker);
 }
 
 .nav__link--btn:link,
@@ -336,6 +358,14 @@ h4 {
   font-size: 1.5rem;
 }
 
+.features__feature p {
+  transition: all 0.5s;
+}
+
+.features__feature p:hover {
+  color: rgb(209, 213, 219);
+}
+
 .features__icon {
   display: flex;
   align-items: center;
@@ -363,7 +393,8 @@ h4 {
 .operations {
   max-width: 100rem;
   margin: 12rem auto 0 auto;
-  background-color: #fff;
+  /* background-color: #fff; */
+  background-color: rgb(31, 41, 55);
 }
 
 .operations__tab-container {
@@ -438,6 +469,11 @@ h4 {
 
 .operations__content p {
   grid-column: 2;
+  transition: all 0.5s;
+}
+
+.operations__content p:hover {
+  color: rgb(209, 213, 219);
 }
 
 .operations__icon--1 {
@@ -498,7 +534,8 @@ h4 {
   top: 50%;
   z-index: 10;
   border: none;
-  background: rgba(255, 255, 255, 0.7);
+  /* background: rgba(255, 255, 255, 0.7); */
+  background-color: rgb(17, 24, 39);
   font-family: inherit;
   color: #333;
   border-radius: 50%;
@@ -506,6 +543,10 @@ h4 {
   width: 5.5rem;
   font-size: 3.25rem;
   cursor: pointer;
+}
+
+.slider__btn:hover {
+  color: rgb(209, 213, 219);
 }
 
 .slider__btn--left {
@@ -544,7 +585,7 @@ h4 {
 }
 
 .dots__dot--active {
-  background-color: #888;
+  background-color: rgb(209, 213, 219);
   opacity: 1;
 }
 
@@ -667,6 +708,10 @@ h4 {
   text-align: center;
 }
 
+.footer__copyright strong {
+  text-transform: uppercase;
+}
+
 /* =============MODAL STYLES============= */
 
 .modal {
@@ -675,7 +720,8 @@ h4 {
   left: 50%;
   transform: translate(-50%, -50%);
   max-width: 60rem;
-  background-color: #f3f3f3;
+  /* background-color: #f3f3f3; */
+  background-color: rgb(17, 24, 39);
   padding: 5rem 6rem;
   box-shadow: 0 4rem 6rem rgba(0, 0, 0, 0.3);
   z-index: 1000;
@@ -718,7 +764,7 @@ h4 {
 .modal__form input {
   font-size: 1.7rem;
   padding: 1rem 1.5rem;
-  border: 1px solid #ddd;
+  border: 0.5px solid #ddd;
   border-radius: 0.5rem;
   transition: all 0.3s;
 }
@@ -807,7 +853,8 @@ h4 {
   .nav__links.nav__open {
     display: flex;
     flex-direction: column;
-    background-color: rgb(255, 255, 255);
+    /* background-color: rgb(255, 255, 255); */
+    background-color: rgb(17, 24, 39);
     position: absolute;
     height: 100vh;
     width: 100vw;
@@ -819,6 +866,10 @@ h4 {
     opacity: 1;
     visibility: visible;
     transition: all 0.3s;
+  }
+
+  .nav__open .nav__item:hover {
+    color: var(--color-primary-darker);
   }
 
   .nav__toggle {

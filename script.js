@@ -73,7 +73,6 @@ function revealSection(entries, observer) {
 const sectionObserver = new IntersectionObserver(revealSection, {
   root: null,
   threshold: 0.2,
-  rootMargin: "200px",
 });
 
 allSections.forEach((section) => {
@@ -263,7 +262,7 @@ tabsContainer.addEventListener("click", function (e) {
 
   if (!btn) return;
 
-  // REMOVING ACTIVE CASSES
+  // REMOVING ACTIVE CLASSES
 
   tabs.forEach((tab) => tab.classList.remove("operations__tab--active"));
 
